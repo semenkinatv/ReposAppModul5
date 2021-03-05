@@ -41,6 +41,31 @@ namespace ConsoleAppModul5
             return color;
     }
 
+        static int[] GetArrayFromConsole()
+        {
+            var result = new int[5];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.WriteLine("Введите элемент массива номер {0}", i + 1);
+                result[i] = int.Parse(Console.ReadLine());
+            }
+            var num = 0;
+            for (int i = 0; i < result.Length; i++)
+                for (int j = i + 1; j < result.Length; j++)
+                    if (result[i] > result[j])
+                    {
+                        num = result[i];
+                        result[i] = result[j];
+                        result[j] = num;
+                    }
+            Console.WriteLine("Наш массивчик: ");
+            foreach (var res in result)
+            { Console.WriteLine(res); }
+
+            return result;
+        }
+
         public static void Main(string[] args)
         {
             (string Name, string[] Dishes) User;
@@ -80,30 +105,7 @@ namespace ConsoleAppModul5
             foreach (var color in favcolor)
             { Console.WriteLine(color); }
 
-            static int[] GetArrayFromConsole()
-            {
-                var result = new int[5];
-
-                for (int i = 0; i < result.Length; i++)
-                {
-                    Console.WriteLine("Введите элемент массива номер {0}", i + 1);
-                    result[i] = int.Parse(Console.ReadLine());
-                }
-                var num = 0;
-                for (int i = 0; i < result.Length; i++)
-                    for (int j = i + 1; j < result.Length; j++)
-                         if (result[i] > result[j])
-                        {   num = result[i];
-                            result[i] = result[j];
-                            result[j] = num;
-                        }
-                Console.WriteLine("Наш массивчик: ");
-                foreach (var res in result)
-                { Console.WriteLine(res); }
-
-                        return result;
-            }
-            
+                 
             var array = new int[5];
             array = GetArrayFromConsole();
 
