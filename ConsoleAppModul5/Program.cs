@@ -40,8 +40,9 @@ namespace ConsoleAppModul5
             return color;
     }
 
-        static int[] GetArrayFromConsole(int num = 5)
+        static int[] GetArrayFromConsole(ref int num )
         {
+            num = 6;
             var result = new int[num];
 
             for (int i = 0; i < result.Length; i++)
@@ -62,11 +63,40 @@ namespace ConsoleAppModul5
                         result[i] = result[j];
                         result[j] = num;
                     }
-            //Console.WriteLine("Наш отсортированный массивчик: ");
-            //foreach (var res in result)
-            //{ Console.WriteLine(res); }
-
+             return result;
+        }
+        static int[] SortArrayDesc(int[] result)
+        {
+            var num = 0;
+            for (int i = 0; i < result.Length; i++)
+                for (int j = i + 1; j < result.Length; j++)
+                    if (result[i] < result[j])
+                    {
+                        num = result[i];
+                        result[i] = result[j];
+                        result[j] = num;
+                    }
             return result;
+        }
+
+
+        static int[] SortArrayAsc(int[] result)
+        {
+            var num = 0;
+            for (int i = 0; i < result.Length; i++)
+                for (int j = i + 1; j < result.Length; j++)
+                    if (result[i] > result[j])
+                    {
+                        num = result[i];
+                        result[i] = result[j];
+                        result[j] = num;
+                    }
+            return result;
+        }
+        static void SortArray1(int[] result, out int[] sorteddesc, out int[] sortedasc)
+        {
+            sorteddesc = SortArrayDesc(result);
+            sortedasc = SortArrayAsc(result);
         }
 
         static void ShowArray(int[] arr, bool fsort = false)
@@ -79,10 +109,20 @@ namespace ConsoleAppModul5
                 foreach (var res in arrsort)
                 { Console.WriteLine(res); }
         }
-        
+
+        static void GetName(ref string name)
+        {
+            Console.WriteLine(name + ", Введите имя");
+            name = Console.ReadLine();
+            Console.WriteLine("Ввели имя " + name);
+        }
 
         public static void Main(string[] args)
         {
+            var name1 = "Таня";
+            GetName(ref name1);
+            Console.WriteLine("Переменная стала = " + name1);
+
             (string Name, string[] Dishes) User;
             Console.WriteLine("Введите имя пользователя:");
             User.Name = Console.ReadLine();
@@ -121,10 +161,15 @@ namespace ConsoleAppModul5
             var array = new int[10];
             //var arrayS = new int[10];
             //arrayS = SortArray(array);
-            array = GetArrayFromConsole(10);
-
-            
+            var num = 10;
+            array = GetArrayFromConsole(ref num);
+              
             ShowArray(array, true);
+            Console.WriteLine("Переменная num была 10, стала " + num);
+
+            var sorteddesc = new int[10];
+            var sortedasc = new int[10];
+            SortArray1( array, out sorteddesc, out  sortedasc);
 
             Console.ReadKey();
         }
