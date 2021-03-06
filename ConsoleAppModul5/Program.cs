@@ -4,17 +4,16 @@ namespace ConsoleAppModul5
 {
     class Program
     {
-        static string ShowColor()
-    {
-        Console.WriteLine("Напишите свой любимый цвет на английском с маленькой буквы");
-        var color = Console.ReadLine();
+        static string ShowColor(string username, int age, params string[] favcolor)
+        {
+            Console.WriteLine(username + "," + age + " лет,\n напишите свой любимый цвет на английском с маленькой буквы");
+            var color = Console.ReadLine();
 
         switch (color)
         {
             case "red":
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.ForegroundColor = ConsoleColor.Black;
-
                 Console.WriteLine("Your color is red!");
                 break;
 
@@ -41,16 +40,20 @@ namespace ConsoleAppModul5
             return color;
     }
 
-        static int[] GetArrayFromConsole()
+        static int[] GetArrayFromConsole(int num = 5)
         {
-            var result = new int[5];
+            var result = new int[num];
 
             for (int i = 0; i < result.Length; i++)
             {
                 Console.WriteLine("Введите элемент массива номер {0}", i + 1);
                 result[i] = int.Parse(Console.ReadLine());
             }
-            var num = 0;
+            return result;
+        }
+
+        static int[] SortArray( int[] result)
+        {   var num = 0;
             for (int i = 0; i < result.Length; i++)
                 for (int j = i + 1; j < result.Length; j++)
                     if (result[i] > result[j])
@@ -59,12 +62,24 @@ namespace ConsoleAppModul5
                         result[i] = result[j];
                         result[j] = num;
                     }
-            Console.WriteLine("Наш массивчик: ");
-            foreach (var res in result)
-            { Console.WriteLine(res); }
+            //Console.WriteLine("Наш отсортированный массивчик: ");
+            //foreach (var res in result)
+            //{ Console.WriteLine(res); }
 
             return result;
         }
+
+        static void ShowArray(int[] arr, bool fsort = false)
+        { var arrsort = arr;
+            if (fsort == true)
+            {
+                arrsort = SortArray(arr);
+            }
+                Console.WriteLine("Наш массив: ");
+                foreach (var res in arrsort)
+                { Console.WriteLine(res); }
+        }
+        
 
         public static void Main(string[] args)
         {
@@ -73,7 +88,7 @@ namespace ConsoleAppModul5
             User.Name = Console.ReadLine();
 
             User.Dishes = new string[5];
-            ; for (int i = 0; i < 5; i++)
+           for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("Введите любимое блюдо № {0}", i + 1);
                 User.Dishes[i] = Console.ReadLine();
@@ -81,24 +96,21 @@ namespace ConsoleAppModul5
 
             Console.WriteLine("Ваше любимое блюдо №3 {0}", User.Dishes[2]);
 
-            
-            //var (name, age) = ("Евгения", 27);
 
-            //Console.WriteLine("Мое имя: {0}", name);
-            //Console.WriteLine("Мой возраст: {0}", age);
+             (string name, int age) anketa;
 
-            //Console.Write("Введите имя: ");
-            //name = Console.ReadLine();
-            //Console.Write("Введите возраст с цифрами:");
-            //age = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите имя: ");
+            anketa.name = Console.ReadLine();
+            Console.Write("Введите возраст с цифрами:");
+            anketa.age = Convert.ToInt32(Console.ReadLine());
 
-            //Console.WriteLine("Ваше имя: {0}", name);
-            //Console.WriteLine("Ваш возраст: {0}", age);
+            Console.WriteLine("Ваше имя: {0}", anketa.name);
+            Console.WriteLine("Ваш возраст: {0}", anketa.age);
 
             var favcolor = new string[3];
             ; for (int i = 0; i < 3; i++)
             {
-                favcolor[i] = ShowColor();
+                favcolor[i] = ShowColor(anketa.name, anketa.age, favcolor);
             }
             
             Console.WriteLine("Ваши цвета:");
@@ -106,8 +118,13 @@ namespace ConsoleAppModul5
             { Console.WriteLine(color); }
 
                  
-            var array = new int[5];
-            array = GetArrayFromConsole();
+            var array = new int[10];
+            //var arrayS = new int[10];
+            //arrayS = SortArray(array);
+            array = GetArrayFromConsole(10);
+
+            
+            ShowArray(array, true);
 
             Console.ReadKey();
         }
