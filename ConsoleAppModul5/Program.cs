@@ -171,7 +171,7 @@ namespace ConsoleAppModul5
             var sortedasc = new int[10];
             SortArray1( array, out sorteddesc, out  sortedasc);
 
-            // 5.5 Рекурсия
+            // 5.5 ------------Рекурсия
             Console.WriteLine("Напишите что-то");
             var str = Console.ReadLine();
 
@@ -179,6 +179,8 @@ namespace ConsoleAppModul5
             var deep = int.Parse(Console.ReadLine());
 
             Echo(str, deep);
+
+            Console.WriteLine(PowerUp(2, 3));
 
             Console.ReadKey();
         }
@@ -189,15 +191,37 @@ namespace ConsoleAppModul5
             if (modif.Length > 2)
             {
                 modif = modif.Remove(0, 2);
-            }
+             }
+            Console.BackgroundColor = (ConsoleColor)deep;
             Console.WriteLine("..." + modif);
 
             if (deep > 1)
             {
                 Echo(modif, deep - 1);
             }
-
-            //Console.ReadKey();
         }
+
+        static int PowerUp(int N, byte pow)
+         { 
+            if (pow == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                if (pow == 1)
+                {
+                    return N;
+                }
+                else
+                {
+                    return N * PowerUp(N, --pow);
+                    
+                }
+            }
+
+        }
+       
+
     }
 }
