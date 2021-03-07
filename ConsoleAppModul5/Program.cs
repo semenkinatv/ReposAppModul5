@@ -8,33 +8,34 @@ namespace ConsoleAppModul5
         static (string Name, string LastName, int Age, bool HasPet, int CountPet, string[] PetName, int CountFavColors, string[] FavColors) EnterUser()
         {
             (string Name, string LastName, int Age, bool HasPet, int CountPet, string[] PetName, int CountFavColors, string[] FavColors) User;
+            string num;
+            int intnum;
             Console.WriteLine("Введите имя:");
             User.Name = Console.ReadLine();
            
             Console.WriteLine("Введите фамилию:");
             User.LastName = Console.ReadLine();
            
-            string num;
-            int intnum;
-            bool isnum;
             do
             {   Console.WriteLine("Введите возраст цифрами:");
                 num = Console.ReadLine();
-                isnum = CheckNum(num, out intnum);
-            } while (isnum == false);
+            } while (!CheckNum(num, out intnum));
 
             User.Age = intnum;
 
-            Console.WriteLine("Есть ли дома питомец да/нет:");
-            var pet = Console.ReadLine();
-           
+            string pet;
+            do
+            {
+                Console.WriteLine("Есть ли дома питомец, ответьте да/нет:");
+                pet = Console.ReadLine();
+            } while (pet != "да" && pet != "нет");
+
             if (pet == "да")
             { User.HasPet = true;
                 do
-                {   Console.WriteLine("Введите количество питомцев:");
+                {   Console.WriteLine("Введите их кол-во:");
                     num = Console.ReadLine();
-                    isnum = CheckNum(num, out intnum);
-                } while (isnum == false);
+                } while (!CheckNum(num, out intnum));
 
                 User.CountPet = intnum;
 
@@ -46,14 +47,11 @@ namespace ConsoleAppModul5
               User.PetName = new string[0];
             }
 
-
             do
             {
                 Console.WriteLine("Введите кол-во любимых цветов:");
                 num = Console.ReadLine();
-                isnum = CheckNum(num, out intnum);
-            } while (isnum == false);
-
+             } while (!CheckNum(num, out intnum));
             
             User.CountFavColors = intnum;
 
@@ -67,7 +65,7 @@ namespace ConsoleAppModul5
         { var PetName = new string[kol];
             for (int i = 0; i < kol; i++)
             {
-                Console.WriteLine("Введите кличку питомца № {0}", i +1);
+                Console.WriteLine("Введите кличку питомца № {0}:", i +1);
                 PetName[i] = Console.ReadLine();
             }
             return PetName;
@@ -79,18 +77,15 @@ namespace ConsoleAppModul5
             var FavColors = new string[kol];
             for (int i = 0; i < kol; i++)
             {
-                Console.WriteLine("Введите любимый цвет № {0} на английском с маленькой буквы:", i + 1);
+                Console.WriteLine("Введите любимый цвет № {0}:", i + 1);
                 FavColors[i] = Console.ReadLine();
             }
             return FavColors;
         }
 
         //Метод, который принимает кортеж из предыдущего шага и показывает на экран данные.
-        static void WriteData()
+        static void WriteData ((string Name, string LastName, int Age, bool HasPet, int CountPet, string[] PetName, int CountFavColors, string[] FavColors) Data)
         {
-            (string Name, string LastName, int Age, bool HasPet, int CountPet, string[] PetName, int CountFavColors, string[] FavColors) Data;
-            Data = EnterUser();
-
             Console.WriteLine("\nАнкетирование закончено. Получены следующие данные по пользователю:");
             Console.WriteLine("Имя: " + Data.Name);
             Console.WriteLine("Фамилия: " + Data.LastName);
@@ -103,7 +98,7 @@ namespace ConsoleAppModul5
             { Console.WriteLine(item); }
 
             Console.WriteLine("Количество любимых цветов: " + Data.CountFavColors);
-            
+
             Console.WriteLine("Перечень любимых цветов:");
             foreach (var item in Data.FavColors)
             { Console.WriteLine(item); }
@@ -125,8 +120,10 @@ namespace ConsoleAppModul5
 
         public static void Main(string[] args)
         {   // -------Итоговый проект------------------------------------------------------
-            
-            WriteData();
+            Console.WriteLine("Анкета пользователя.");
+            // (string Name, string LastName, int Age, bool HasPet, int CountPet, string[] PetName, int CountFavColors, string[] FavColors) Data;
+            // Data = EnterUser();
+            WriteData(EnterUser());
 
 
             //------- Материалы модуля 5---------------------------------------------------
